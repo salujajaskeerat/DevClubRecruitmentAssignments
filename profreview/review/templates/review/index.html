@@ -2,5 +2,20 @@
 {% block title %}review {% endblock %}
 {% block body %}
 
-	<h1>This is Professor review site , Here we review professor of iit delhi.</h1>
+	<div class="container-fluid text-center">
+		<h1 id="logo-heading">ProffReview</h1>
+		<br>
+		<h3>We enable you to review Professors in IIT Delhi<br> You can watch rating
+			and even rate your Professors . Why to wait?? <br>Join Now</h3>
+
+	</div>
+
+	<div class="container-fluid text-center">
+		<h2>The list of Professors are ::</h2>
+		<ul>
+			{% for P in Prof %}
+			<li><a href="{% url 'review:details' P.id %}">{{ P.Name }}  </a></li>
+			{% endfor %}
+		</ul>
+	</div>
 {% endblock %}

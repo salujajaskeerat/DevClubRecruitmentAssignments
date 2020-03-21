@@ -8,3 +8,7 @@ body{
 .navbar{
 	border-radius: 0;
 }
+
+#logo-heading{
+	font-family: 'Satisfy',cursive;
+}

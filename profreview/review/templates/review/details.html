@@ -1,0 +1,14 @@
+{% extends "review/base.html" %}
+{% block title%}xyzc{% endblock %}
+{% block body %}
+<!-- Here comes code for displaying our professors -->
+<div class="container-fluid text-center text-capitalize">
+	<h1>Professor Name :: {{ Prof.Name }}</h1>
+	<ul>
+		<li>Department : {{Prof.Dpt  }}</li>
+		<li>Research : {{ Prof.research }}</li>
+	</ul>
+</div>
+
+{% endblock %}
+
