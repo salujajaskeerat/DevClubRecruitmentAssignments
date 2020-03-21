@@ -319,3 +319,98 @@ from models import <table-name>
 
 	class classname (generic.ListView):
 		template_name="review/index.html"
+
+
+
+
+User Registration form Steps:::
+-------------------------------
+
+1> In your app make a file forms.py 
+2> now in forms.py do the following::
+	from django.contrib.auth.models import User
+	// this gives use base user class we can use 
+	from django import forms
+
+
+	class UserForm(forms.ModelForms):
+	# this will create blueprint for our forms
+
+	password=forms.CharField(widget=forms.PasswordInput())
+	# this means hidden password
+		class Meta:
+			model=User
+			fields=['username','email','password']
+
+
+ 3> Now go to the views.py for the app
+    import the following::
+    from django.shortcut import render, redirect
+    from django.contrib.auth import authenticate , login
+    from django.views import Views
+
+
+    also now import the forms.py , you created above::
+    from .forms import UserForm
+
+
+
+
+  4> Now to make things easy we use Views class which we importes in view.py to 
+  create the 
+
+      class UserFormView(View ):
+      	form_class=UserForm 
+      	# This tells that the blueprint we made , we are gonna use it.
+      	# make a page register.html to where we will render
+      	template_name="review/register.html"
+
+
+
+      	#now to separate the get and post request we have builtin function 
+
+      	# display Blank form Here
+      	def get(self,request):
+      		form=self.form_class(None)
+      		return render(request,self.template_name),{'form':form})
+      		# the above code does only display blank form to the user 
+      		# the form blueprint is send as dictionary into register.html
+
+
+      	# process the data
+      	def post(self,request):
+
+      		form=self.form_class(request.POST)
+
+
+      		if form.is_valid():
+
+      			# we need to check if user entered correct form of data
+      			user=form.save(commit=False)
+      			# this cretes a object of the form , but doesnot save it
+      			username=form.cleaned_data['username']
+      			password=form.cleaned_data['password']
+      			user.set_password(password)
+
+      			user.save()
+
+
+
+      			# now we need to retun him to the login page we do
+
+      			user=authenticate(username=username,password=password)
+      			// this simple function logs the user into our site
+
+
+      			if user is not None:
+      				# this is just to vheck if user is not banned/disabled
+      				if user.is_active():
+      					login(request,user)
+      					# after user has logged in we have to redirect him to home
+      					return redirect('review:index')
+
+
+      		return render(request,self.template_name,{'form':form})
+
+ 5> now add the register.html to the url patterb 
+ 	url(r'^register/$',views.DetailView.as_view(), name='register')
