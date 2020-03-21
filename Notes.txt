@@ -167,7 +167,7 @@ Setting UP Admin Interface WIth Django :::::::
 
  Managing front-end and back-end together -------------------
 
- 1> inside your app dir make new dir called template
+ 1> inside your app dir make new dir called templates
  2> inside template make dir with same name as app
  3> inside this add the html pages you want in your app
 
@@ -299,3 +299,23 @@ action :: this is the url which form goes and it POST type as shown in meathod
 
 
 csrf token ::: To protect your site from malicious attacks add {% csrf_token %}   inside the forms0 .
+
+
+
+
+
+Generic Views:::
+Thes will be the Things we will be using instead of render function .
+
+from django.views import generic
+from models import <table-name>
+
+
+
+	There are two types of generic views which we will study::
+	List generic view 
+	details generic view
+
+
+	class classname (generic.ListView):
+		template_name="review/index.html"
