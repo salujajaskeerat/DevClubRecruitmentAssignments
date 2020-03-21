@@ -1,0 +1,14 @@
+body{
+	background: url('images/background.webp')
+}
+
+.navbar-brand{
+	font-family: 'Satisfy' ,cursive;
+}
+.navbar{
+	border-radius: 0;
+}
+
+#logo-heading{
+	font-family: 'Satisfy',cursive;
+}

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>{% block title %}Professor review{% endblock %}</title>
+
+
+  {% load static  %}
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <link href="https://fonts.googleapis.com/css?family=Satisfy&display=swap" rel="stylesheet">
+  <!-- Loads path to static files -->
+    <link rel="stylesheet" type="text/css" href="{% static 'review/style.css'%}">
+
+  
+  
+
+</head>
+<body>
+
+<!--Navbar  -->
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    
+    <!-- Navbar-header -->
+    <div class="navbar-header" id="nav-header">
+      <a class="navbar-brand" href="#">MyproffReview</a>
+    </div>
+
+    <ul class="nav navbar-nav">
+      <li class="active"><a href="{% url 'review:index'%}">Home</a></li>
+      <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Find by Deapartment <span class="caret"></span></a>
+        <ul class="dropdown-menu">
+          <li><a href="#">Mathematics</a></li>
+          <li><a href="#">Computer Science</a></li>
+          <li><a href="#">Electrical</a></li>
+        </ul>
+      </li>
+          </ul>
+
+      <!-- These are glyphicon icons -->
+    <ul class="nav navbar-nav navbar-right">
+      <li><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+      <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+    </ul>
+  </div>
+</nav>
+  
+
+</body>
+{% block body %}
+{% endblock%}
+
+</html>
