@@ -1,9 +1,11 @@
 
-
+from django.contrib.auth.decorators import login_required
+# we will use this decorator to check if user is login before accesing the page  
 from django.views import generic
 from .models import Proff
 from django.shortcuts import render, redirect
-from django.contrib.auth import authenticate , login
+from django.contrib.auth import authenticate , login 
+from django.contrib.auth.views import LoginView
 from django.views import View
 from .forms import UserForm ,LoginForm
 
@@ -68,46 +70,6 @@ class UserFormView(View ):
 
 		return render(request,(self.template_name),{'form':form})
 
-
-class Login(View):
-	form_class=LoginForm
-      	# This tells that the blueprint we made , we are gonna use it.
-      	# make a page register.html to where we will render
-	template_name="review/login.html"
-
-	def get(self,request):
-		form=self.form_class(None)
-		return render(request,self.template_name,{'form':form})
-      		# the above code does only display blank form to the user 
-      		# the form blueprint is send as dictionary into register.html
-      	# process the data
-	def post(self,request):
-
-		form=self.form_class(request.POST)
-		# we create a object of class form_class and store the posted data in it
-
-
-		# just check if details entered is valid
-		if form.is_valid():
-			user=form.save(commit=False)
-      			# this cretes a object of the form , but doesnot save it
-			email=form.cleaned_data['email']
-			password=form.cleaned_data['password']
-			user.set_password(password)
-      			# now we need to return him to the login page we do
-
-			user=authenticate(email=email,password=password)
-      			
-			if user is not None:
-				if user.is_active:	
-      				# this is just to vheck if user is not banned/disabled
-					login(request,user)
-      				# after user has logged in we have to redirect him to home
-					return redirect('review:index')
-
-
-			return render(request,(self.template_name),{'form':form})
-
-
-
-		return render(request,(self.template_name),{'form':form})
+@login_required
+def profile(request):
+	return render(request,'review/profile.html')

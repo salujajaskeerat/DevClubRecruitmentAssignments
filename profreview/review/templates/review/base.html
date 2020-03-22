@@ -43,9 +43,19 @@
           </ul>
 
       <!-- These are glyphicon icons -->
-    <ul class="nav navbar-nav navbar-right">
-      <li><a href="{% url 'review:register' %}"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-      <li><a href="{% url 'review:Login'%}"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+
+  <ul class="nav navbar-nav navbar-right">
+    {% if user.is_authenticated %}
+        
+        <li><a href="{% url 'review:profile' %}"><span class="glyphicon glyphicon-user"></span> Profile</a></li>
+        <li><a href="{% url 'review:Logout' %}"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+           
+
+    {% else %}
+            <li><a href="{% url 'review:register' %}"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+            <li><a href="{% url 'review:Login'%}"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+
+    {% endif%}
     </ul>
   </div>
 </nav>

@@ -2,7 +2,7 @@
 
 {% block body %}
 <div class="signup-form" id="registration">
-    <form action="" method="post">
+    <form  method="post">
     	{% csrf_token %} 
 		<h2>Login</h2>
 		<p>Please fill in this form to Login</p>
@@ -14,6 +14,6 @@
             <button type="submit" class="btn btn-primary btn-lg">Login</button>
         </div>
     </form>
-	<div class="text-center">Not made an account <a href="#">Sign up here</a></div>
+	<div class="text-center">Not made an account <a href="{% url 'review:register'%}">Sign up here</a></div>
 </div>
 {% endblock %}                         

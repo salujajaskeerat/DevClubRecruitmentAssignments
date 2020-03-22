@@ -120,3 +120,11 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
+# thse are for login routes
+LOGIN_REDIRECT_URL = ('review:index')
+LOGIN_URL=('review:Login')
+
+# To store the user Uploaded Media::
+MEDIA_ROOT = os.path.join(BASE_DIR,'media')
+MEDIA_URL='/media/'
