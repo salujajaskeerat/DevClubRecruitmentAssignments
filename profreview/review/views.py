@@ -1,5 +1,6 @@
 
-
+from django.contrib.auth.decorators import login_required
+# we will use this decorator to check if user is login before accesing the page  
 from django.views import generic
 from .models import Proff
 from django.shortcuts import render, redirect
@@ -69,4 +70,6 @@ class UserFormView(View ):
 
 		return render(request,(self.template_name),{'form':form})
 
-
+@login_required
+def profile(request):
+	return render(request,'review/profile.html')

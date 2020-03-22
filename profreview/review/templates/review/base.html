@@ -47,7 +47,7 @@
   <ul class="nav navbar-nav navbar-right">
     {% if user.is_authenticated %}
         
-
+        <li><a href="{% url 'review:profile' %}"><span class="glyphicon glyphicon-user"></span> Profile</a></li>
         <li><a href="{% url 'review:Logout' %}"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
            
 

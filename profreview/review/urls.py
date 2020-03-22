@@ -9,4 +9,5 @@ urlpatterns=[
 	url((r'^register/$'),views.UserFormView.as_view(),name='register'),
 	url((r'^login/$'),auth_views.LoginView.as_view(template_name='review/login.html'),name='Login'),
 	url((r'^logout/$'),auth_views.LogoutView.as_view(template_name='review/logout.html'),name='Logout'),
+	url(r'^profile/$',views.profile,name='profile' ),
 	]
