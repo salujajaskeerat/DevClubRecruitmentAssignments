@@ -1,7 +1,7 @@
 from django.contrib.auth.models import User
 	# this gives use base user class we can use 
 from django import forms
-from .models import Profile
+from .models import *
 
 
 class UserForm(forms.ModelForm):
@@ -29,5 +29,11 @@ class ProfileUpdateForm(forms.ModelForm):
 	class Meta:
 		model=Profile 
 		fields=['image']
+
+
+class CommentForm(forms.ModelForm):
+	class Meta:
+		model=Comment
+		fields=['content',]
 
 

@@ -11,6 +11,30 @@
 		<li>Research : {{ Prof.research }}</li>
 	</ul>
 </div>
+<br>
+<br>
+<br>
 
+<div class="main-comment-section">
+	{{comment.count }} Comment{{comment.pluralize}}
+	
+	{% for com in comment %}
+	<div class="blockquote">
+		  <p class="mb-0">{{com.content}}</p>
+		  <footer class="blockquote-footer">by~ <cite title="Source Title">{{com.user|capfirst}}</cite></footer>
+	</div>
+	{% endfor %}
+
+	
+
+</div>
+{% if user.is_authenticated %}
+	<form method="post">
+		{% csrf_token %}
+		{{comment_form.as_p }}
+		<input type="Submit" value="Submit">
+	</form>
+
+{% endif %}
 {% endblock %}
 
