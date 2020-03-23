@@ -13,8 +13,8 @@
 	<div class="container-fluid text-center">
 		<h2>The list of Professors are ::</h2>
 		<ul>
-			{% for P in Prof %}
-			<li><a href="{% url 'review:details' P.id %}">{{ P.Name }}  </a></li>
+			{% for P in dept %}
+			<li><a href="{% url 'review:details' P.id %}">{{ P.dept_name }}  </a></li>
 			{% endfor %}
 		</ul>
 	</div>

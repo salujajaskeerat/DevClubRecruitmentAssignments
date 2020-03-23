@@ -3,7 +3,12 @@ from django.db import models
 from django.contrib.auth.models import User
 
 # Create your models here.
+class department(models.Model):
+	dept_name=models.CharField(max_length=30)
+	def __str__(self):
+		return self.dept_name
 class Proff(models.Model):
+	department=models.ForeignKey(department,on_delete=models.CASCADE,null=True)
 	Name=models.CharField(max_length=100)
 	email=models.CharField(max_length=40)
 	Dpt=models.CharField(max_length=40)
