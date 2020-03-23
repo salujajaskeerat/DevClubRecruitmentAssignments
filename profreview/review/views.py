@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 # we will use this decorator to check if user is login before accesing the page  
 from django.views import generic
 from .models import *
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate , login 
 from django.contrib.auth.views import LoginView
 from django.views import View
@@ -16,8 +16,14 @@ class IndexView (generic.ListView):
 	def get_queryset(self): # this queries the database
 		return department.objects.all()
 
+
+#lets make a index view for the each of department's professor
+def prof_index(request,pk):
+	template_name="review/proflist.html"
+	Prof =Proff.objects.filter(department=pk)
+	return render(request,template_name,{'Prof':Prof})
 class DetailView(generic.DetailView):
-	model=department
+	model=Proff
 	context_object_name='Prof'
 	template_name="review/details.html"
 
