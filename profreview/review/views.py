@@ -7,8 +7,8 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate , login 
 from django.contrib.auth.views import LoginView
 from django.views import View
-from .forms import UserForm ,LoginForm
-
+from .forms import UserForm ,UserUpdateForm ,ProfileUpdateForm
+from django.contrib import messages
 
 class IndexView (generic.ListView):
 	template_name="review/index.html"
@@ -72,4 +72,23 @@ class UserFormView(View ):
 
 @login_required
 def profile(request):
-	return render(request,'review/profile.html')
+	if request.method=='POST':
+		u_form=UserUpdateForm(request.POST,instance=request.user)
+		p_form=ProfileUpdateForm(request.POST,
+			request.FILES,
+			instance=request.user.profile)
+		if u_form.is_valid() and p_form.is_valid():
+			u_form.save()
+			p_form.save()
+			messages.success(request,f'your account has been Updated')
+			return redirect('review:profile')
+	else:
+		u_form=UserUpdateForm(instance=request.user)
+		p_form=ProfileUpdateForm(instance=request.user.profile)
+	# we have created empty user and profile update form
+	# Now we will pass these forms into our template
+	context={
+		'u_form':u_form,
+		'p_form':p_form,
+	}
+	return render(request,'review/profile.html',context)
