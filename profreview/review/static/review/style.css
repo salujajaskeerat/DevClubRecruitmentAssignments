@@ -13,7 +13,11 @@ body{
 	font-family: 'Satisfy',cursive;
 }
 
-
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
 #registration{
 		color: #fff;
 		background: #19aa8d;
