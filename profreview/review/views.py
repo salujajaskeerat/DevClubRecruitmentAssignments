@@ -7,7 +7,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate , login 
 from django.contrib.auth.views import LoginView
 from django.views import View
-from .forms import UserForm ,UserUpdateForm ,ProfileUpdateForm
+from .forms import *
 from django.contrib import messages
 
 class IndexView (generic.ListView):
@@ -22,10 +22,36 @@ def prof_index(request,pk):
 	template_name="review/proflist.html"
 	Prof =Proff.objects.filter(department=pk)
 	return render(request,template_name,{'Prof':Prof})
-class DetailView(generic.DetailView):
-	model=Proff
-	context_object_name='Prof'
+# this is prof details view , which we can acess
+
+def prof_details(request,pk):
 	template_name="review/details.html"
+	prof=Proff.objects.filter(pk=pk)
+	Prof=prof[0]
+
+	comment=Comment.objects.filter(prof=pk).order_by('id')
+
+
+
+	if request.method=='POST':
+		comment_form=CommentForm(request.POST)
+		if(comment_form.is_valid):
+			content=request.POST.get('content')
+			c=Comment.objects.create(prof=Prof,user=request.user,content=content)
+			c.save()
+			return redirect('review:details')
+	else:
+		comment_form=CommentForm()
+	# this gives us the requires proff on the list
+	return render(request,template_name,{'Prof':Prof,'comment':comment,'comment_form':comment_form})
+
+
+
+# we used this before
+# class DetailView(generic.DetailView):
+# 	model=Proff
+# 	context_object_name='Prof'
+# 	template_name="review/details.html"
 
 class UserFormView(View ):
 	form_class=UserForm 
@@ -98,3 +124,5 @@ def profile(request):
 		'p_form':p_form,
 	}
 	return render(request,'review/profile.html',context)
+
+

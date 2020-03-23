@@ -16,6 +16,10 @@ class Proff(models.Model):
 	post=models.CharField(max_length=25)
 	image=models.FileField()
 
+	def __str__(self):
+		return self.Name
+
+
 
 class Profile(models.Model):
 	user=models.OneToOneField(User,on_delete=models.CASCADE)
@@ -24,3 +28,15 @@ class Profile(models.Model):
 
 	def __str__(self):
 		return f'{self.user.username} Profile'
+
+
+class Comment(models.Model):
+	prof=models.ForeignKey(Proff ,on_delete=models.CASCADE)
+	user=models.ForeignKey(User,on_delete=models.CASCADE)
+	content=models.TextField(max_length=300)
+
+	timestamp=models.DateTimeField(auto_now_add=True)
+
+
+	def __str__(self):
+		return '{}.{}'.format(self.prof.Name,str(self.user.username))
