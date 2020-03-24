@@ -1,28 +1,70 @@
 {% extends "review/base.html" %}
-{% block title%}xyzc{% endblock %}
+{% block title%}{{Prof.Name}}{% endblock %}
 {% block body %}
 <!-- Here comes code for displaying our professors -->
-<div class="col-lg-3"></div>
-<div class="container-fluid text-center text-capitalize col-lg-6 col-sm-12">
-	<img src="{{ Prof.image.url }}" height="40%" width="40%" class="img-responsive center-block"  > 
-	<h1>Professor Name :: {{ Prof.Name }}</h1>
-	<ul>
-		<li>Department : {{Prof.Dpt  }}</li>
-		<li>Research : {{ Prof.research }}</li>
-	</ul>
-</div>
-<br>
-<br>
-<br>
+<div class="row">
+	<div class="container-fluid  col-lg-5 col-sm-12">
 
-<div class="main-comment-section">
+		<img src="{{ Prof.image.url }}"  class="img-responsive  img-circle"  id='profile_image'>
+
+				<div class=" text-capitalize text-large"  >
+				<ul >
+					<li>Professor Name :: {{ Prof.Name }}</li>
+					<li>Department : {{Prof.Dpt  }}</li>
+					<li>Research : {{ Prof.research }}</li>
+					<li>Email : {{ Prof.email }}</li>
+					<li>Post : {{ Prof.post }}</li>
+
+				</ul>
+				</div>
+	</div>
+	
+			{# Here comes the Rating section of Professor #}
+			<div class="col-lg-7 col-sm-12 text-center">
+				{# OVERALL RATING OF PROFFESOR #}
+					<h1 class="text-center "> Overall Rating:</h1>
+					<h2 class="text-center">{{net_rating}}/100</h2>
+					<h1 class="text-center">Total Votes</h1>
+					<h2 class="text-center">{{total_ratings}}</h2>
+			 	{# Rating By logged in User #}
+				{% if user.is_authenticated %}
+					<h1>Your Rating:</h1>
+					{% if user_rating is None %}
+					<h2>--/100</h2>
+					
+					<a href="{% url 'review:prof_rating' Prof.id %}"><button class="alert-success" >Wanna Rate</button>
+					</a>
+					{% else %}
+					<h2>{{user_rating}}/100</h2>
+					{% endif %}
+				{% endif %}
+			</div>
+</div>
+<hr>
+<div class="main-comment-section col-lg-7 col-sm-12">
+	<h1>Users Comments About Him</h1>
 	{{comment.count }} Comment{{comment.pluralize}}
 	
 	{% for com in comment %}
-	<div class="blockquote">
-		  <p class="mb-0">{{com.content}}</p>
-		  <footer class="blockquote-footer">by~ <cite title="Source Title">{{com.user|capfirst}}</cite></footer>
-	</div>
+
+	{# here comes the blogQuote #}
+		<div style="width: 960px; margin: 0 auto; padding-top: 80px; padding-bottom: 80px;"> 
+
+		     <div class="testimonial-quote group">
+		        <img src="{{com.user.profile.image.url}}">
+		        <div class="quote-container">
+		            <blockquote>
+		                <p>{{com.content}}</p>
+		            </blockquote>  
+		            <cite><span>{{com.user|capfirst}}</span><br><br><br>
+		            </cite>
+		        </div>
+		    </div>    
+		   <hr style="margin: 60px auto; opacity: .5;">
+
+
+
+
 	{% endfor %}
 
 	
@@ -33,7 +75,8 @@
 		{% csrf_token %}
 		{{comment_form.as_p }}
 		<input type="Submit" value="Submit">
-	</form>
+</form>
+
 
 {% endif %}
 {% endblock %}

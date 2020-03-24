@@ -1,0 +1,18 @@
+{% extends 'review/base.html'%}
+{% block body%}
+<h1>You have selected to review {{Prof.Name}}.</h1>
+<p>His Net Ratings are :: {{ net_rating}}/100 <br> Total Student who rated are::{{total_ratings}} </p>
+<div>
+	<h3>On scale 1-100 what rating Would You like To Give</h3>
+	<form method="post">
+		{% csrf_token %}
+		  <div class="form-group">
+		    <label >Rating</label>
+		    {{ r_form.rating1}}
+		  </div>
+		  
+		   <button type="submit" class="btn btn-primary btn-lg">Submit Rating</button>
+		
+	</form>
+</div>
+{% endblock %} 

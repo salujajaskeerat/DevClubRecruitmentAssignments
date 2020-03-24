@@ -9,7 +9,7 @@ from django.contrib.auth.views import LoginView
 from django.views import View
 from .forms import *
 from django.contrib import messages
-
+from . import functions
 class IndexView (generic.ListView):
 	template_name="review/index.html"
 	context_object_name='dept'
@@ -30,9 +30,19 @@ def prof_details(request,pk):
 	Prof=prof[0]
 
 	comment=Comment.objects.filter(prof=pk).order_by('id')
-
-
-
+		# this store all ratings for this prof
+	r=prof_review.objects.filter(prof=Prof)
+	#Lets calculate his Previous Ratings
+	net_rating=functions.net_rating(r)
+	total_ratings=r.count()
+	user_rating=None
+	if request.user.is_authenticated:
+		# it means that user is logged in 
+		if(prof_review.objects.filter(prof=Prof,user=request.user).exists()):
+			user_rating=prof_review.objects.get(prof=Prof,user=request.user).rating1
+		
+	
+		
 	if request.method=='POST':
 		comment_form=CommentForm(request.POST)
 		if(comment_form.is_valid):
@@ -43,9 +53,19 @@ def prof_details(request,pk):
 	else:
 		comment_form=CommentForm()
 	# this gives us the requires proff on the list
-	return render(request,template_name,{'Prof':Prof,'comment':comment,'comment_form':comment_form})
 
+		context={
+	'Prof':Prof,
+	'comment':comment,
+	'comment_form':comment_form,
+	'net_rating':net_rating,
+	'total_ratings':total_ratings,
+	'user_rating':user_rating,
+	}
 
+	return render(request,template_name,context)
+
+#
 
 # we used this before
 # class DetailView(generic.DetailView):
@@ -125,4 +145,48 @@ def profile(request):
 	}
 	return render(request,'review/profile.html',context)
 
+@login_required
+def prof_rating(request,pk):
+	template_name='review/prof_rating.html'
+	Prof=Proff.objects.get(pk=pk)
+
+	# this store all ratings for this prof
+	r=prof_review.objects.filter(prof=Prof)
+	#Lets calculate his Previous Ratings
+	net_rating=functions.net_rating(r)
+	total_ratings=r.count()
+	
+	
+		# Here we will pass form to user To allow him to Rate
+
+
+	
+
+	if request.method=='GET':
+
+		r_form=ProfRatingForm()
+		context={
+		'Prof':Prof,
+		'net_rating':net_rating,
+		'total_ratings':total_ratings,
+		'r_form':r_form,
+		}
+		return render(request,template_name,context)
+
+	else:
+		r_form=ProfRatingForm(request.POST)
+		if(r_form.is_valid()):
+			rating1=request.POST.get('rating1')
+			r=prof_review.objects.create(prof=Prof,user=request.user,rating1=rating1)
+			r.save()
+			
+			return redirect('review:details',pk)
+		context={
+		'Prof':Prof,
+		'net_rating':net_rating,
+		'total_ratings':total_ratings,
+		'r_form':r_form,
+		}
+		context={'Prof':Prof,'net_rating':net_rating,'total_ratings':total_ratings}
+		return render(request,template_name,context)
 
