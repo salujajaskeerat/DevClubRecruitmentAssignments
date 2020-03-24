@@ -11,6 +11,8 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
   
 
+<link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet">
+
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
   <link href="https://fonts.googleapis.com/css?family=Satisfy&display=swap" rel="stylesheet">
@@ -49,7 +51,9 @@
   <ul class="nav navbar-nav navbar-right">
     {% if user.is_authenticated %}
         
-        <li><a href="{% url 'review:profile' %}"><span class="glyphicon glyphicon-user"></span> Profile</a></li>
+        <li><a href="{% url 'review:profile' %}">
+        <img src="{{user.profile.image.url}}" class="profile-image " id='profile'>
+        
         <li><a href="{% url 'review:Logout' %}"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
            
 

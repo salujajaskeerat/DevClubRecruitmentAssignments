@@ -14,7 +14,7 @@ class Proff(models.Model):
 	Dpt=models.CharField(max_length=40)
 	research=models.CharField(max_length=100)
 	post=models.CharField(max_length=25)
-	image=models.FileField()
+	image=models.ImageField()
 
 	def __str__(self):
 		return self.Name
@@ -24,7 +24,7 @@ class Proff(models.Model):
 class Profile(models.Model):
 	user=models.OneToOneField(User,on_delete=models.CASCADE)
 	# we are basically using username as the primary key for our project
-	image=models.FileField(default='default.png')
+	image=models.ImageField(default='default.gif')
 
 	def __str__(self):
 		return f'{self.user.username} Profile'

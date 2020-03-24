@@ -14,25 +14,30 @@
 	</div>
 </div>	
 
-	<div class="container-fluid text-center">
-		<h2>The list of Professors are ::</h2>
-		<ul>
-			{% for P in dept %}
-			<li><a href="{% url 'review:prof_details' P.id %}">{{ P.dept_name }}  </a></li>
-		{% endfor %}
-		</ul>
-	</div>
+	
 
 		<div class="container-fluid bg-3 text-center">    
-		  <h3>Choose The Department</h3><br>
-		  <div class="row">
-		    <div class="col-sm-3 bg-success " id='tiles'>
+		  
+		  <h2 font="Satisfy">Choose By Department</h3><br>
+		  
+		<div class="row">
+		  {% for P in dept  %}
+		  <div>
+		    <div  id='tiles'>
 		    	<br><br><br>
-		      <h1 class="text-success">Some text..</h1>
-		      <a href="{% url 'review:prof_details' D.id">
-		      		    </div>
+		    <h1 class="">
+
+		      <a href="{% url 'review:prof_details' P.id %}" id='xyz'">
+		      		{{P.dept_name}}
+		      </a>	
+		   	</h1>
+		      
+		    </div>
+		   {% endfor %}
 		    
-		  </div>
+		</div>
+		
+
 		</div>
 
 

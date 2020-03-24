@@ -30,9 +30,19 @@ def prof_details(request,pk):
 	Prof=prof[0]
 
 	comment=Comment.objects.filter(prof=pk).order_by('id')
-
-
-
+		# this store all ratings for this prof
+	r=prof_review.objects.filter(prof=Prof)
+	#Lets calculate his Previous Ratings
+	net_rating=functions.net_rating(r)
+	total_ratings=r.count()
+	user_rating=None
+	if request.user.is_authenticated:
+		# it means that user is logged in 
+		if(prof_review.objects.filter(prof=Prof,user=request.user).exists()):
+			user_rating=prof_review.objects.get(prof=Prof,user=request.user).rating1
+		
+	
+		
 	if request.method=='POST':
 		comment_form=CommentForm(request.POST)
 		if(comment_form.is_valid):
@@ -43,7 +53,17 @@ def prof_details(request,pk):
 	else:
 		comment_form=CommentForm()
 	# this gives us the requires proff on the list
-	return render(request,template_name,{'Prof':Prof,'comment':comment,'comment_form':comment_form})
+
+		context={
+	'Prof':Prof,
+	'comment':comment,
+	'comment_form':comment_form,
+	'net_rating':net_rating,
+	'total_ratings':total_ratings,
+	'user_rating':user_rating,
+	}
+
+	return render(request,template_name,context)
 
 #
 
