@@ -2,20 +2,39 @@
 {% block title %}review {% endblock %}
 {% block body %}
 
-	<div class="container-fluid text-center">
+
+{# Here comes the Jumbotron #}
+<div class="jumbotron">
+	<div class="container-fluid text-center ">
 		<h1 id="logo-heading">ProffReview</h1>
 		<br>
 		<h3>We enable you to review Professors in IIT Delhi<br> You can watch rating
 			and even rate your Professors . Why to wait?? <br>Join Now</h3>
 
 	</div>
+</div>	
 
 	<div class="container-fluid text-center">
 		<h2>The list of Professors are ::</h2>
 		<ul>
 			{% for P in dept %}
 			<li><a href="{% url 'review:prof_details' P.id %}">{{ P.dept_name }}  </a></li>
-			{% endfor %}
+		{% endfor %}
 		</ul>
 	</div>
+
+		<div class="container-fluid bg-3 text-center">    
+		  <h3>Choose The Department</h3><br>
+		  <div class="row">
+		    <div class="col-sm-3 bg-success " id='tiles'>
+		    	<br><br><br>
+		      <h1 class="text-success">Some text..</h1>
+		      <a href="{% url 'review:prof_details' D.id">
+		      		    </div>
+		    
+		  </div>
+		</div>
+
+
+
 {% endblock %}

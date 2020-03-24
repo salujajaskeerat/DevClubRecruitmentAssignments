@@ -34,7 +34,8 @@
 		{{comment_form.as_p }}
 		<input type="Submit" value="Submit">
 	</form>
-
+<hr>
+<a href="{% url 'review:prof_rating' Prof.id %}"><button class="alert-success" >Wanna review</button></a>
 {% endif %}
 {% endblock %}
 

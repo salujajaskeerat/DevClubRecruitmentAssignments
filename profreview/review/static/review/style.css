@@ -107,3 +107,7 @@ img {
 			position: absolute;
 		}
 
+#tiles {
+	height: 200px ;
+	text-align: center; 
+}

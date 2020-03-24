@@ -1,7 +1,7 @@
 from django.db import models
 # now let us add feature to add profile pic of our users
 from django.contrib.auth.models import User
-
+from django.core.validators import MaxValueValidator, MinValueValidator
 # Create your models here.
 class department(models.Model):
 	dept_name=models.CharField(max_length=30)
@@ -40,3 +40,17 @@ class Comment(models.Model):
 
 	def __str__(self):
 		return '{}.{}'.format(self.prof.Name,str(self.user.username))
+
+
+# lets create review ssytem for a professor
+class prof_review(models.Model):
+	prof=models.ForeignKey(Proff,on_delete=models.CASCADE)
+	user=models.ForeignKey(User,on_delete=models.CASCADE)
+
+
+	class Meta:
+		unique_together=('prof','user')
+		# this forcelly ensure that for one prof user have only one rating from user
+		# this is nice technique
+
+	rating1=models.IntegerField(validators=[MaxValueValidator(100), MinValueValidator(1)],null=True)

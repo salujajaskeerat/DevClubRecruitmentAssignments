@@ -9,7 +9,7 @@ from django.contrib.auth.views import LoginView
 from django.views import View
 from .forms import *
 from django.contrib import messages
-
+from . import functions
 class IndexView (generic.ListView):
 	template_name="review/index.html"
 	context_object_name='dept'
@@ -45,7 +45,7 @@ def prof_details(request,pk):
 	# this gives us the requires proff on the list
 	return render(request,template_name,{'Prof':Prof,'comment':comment,'comment_form':comment_form})
 
-
+#
 
 # we used this before
 # class DetailView(generic.DetailView):
@@ -125,4 +125,48 @@ def profile(request):
 	}
 	return render(request,'review/profile.html',context)
 
+@login_required
+def prof_rating(request,pk):
+	template_name='review/prof_rating.html'
+	Prof=Proff.objects.get(pk=pk)
+
+	# this store all ratings for this prof
+	r=prof_review.objects.filter(prof=Prof)
+	#Lets calculate his Previous Ratings
+	net_rating=functions.net_rating(r)
+	total_ratings=r.count()
+	
+	
+		# Here we will pass form to user To allow him to Rate
+
+
+	
+
+	if request.method=='GET':
+
+		r_form=ProfRatingForm()
+		context={
+		'Prof':Prof,
+		'net_rating':net_rating,
+		'total_ratings':total_ratings,
+		'r_form':r_form,
+		}
+		return render(request,template_name,context)
+
+	else:
+		r_form=ProfRatingForm(request.POST)
+		if(r_form.is_valid()):
+			rating1=request.POST.get('rating1')
+			r=prof_review.objects.create(prof=Prof,user=request.user,rating1=rating1)
+			r.save()
+			
+			return redirect('review:details',pk)
+		context={
+		'Prof':Prof,
+		'net_rating':net_rating,
+		'total_ratings':total_ratings,
+		'r_form':r_form,
+		}
+		context={'Prof':Prof,'net_rating':net_rating,'total_ratings':total_ratings}
+		return render(request,template_name,context)
 
