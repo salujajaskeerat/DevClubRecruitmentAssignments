@@ -1,4 +1,4 @@
-
+from django.db.models import F
 from django.contrib.auth.decorators import login_required
 # we will use this decorator to check if user is login before accesing the page  
 from django.views import generic
@@ -26,11 +26,16 @@ def prof_index(request,pk):
 
 def prof_details(request,pk):
 	template_name="review/details.html"
-	prof=Proff.objects.filter(pk=pk)
-	Prof=prof[0]
+	Prof=Proff.objects.get(pk=pk)
+	
 
 	comment=Comment.objects.filter(prof=pk).order_by('id')
+	# to store Number of likes for each comment we
+	
+	 
+
 		# this store all ratings for this prof
+
 	r=prof_review.objects.filter(prof=Prof)
 	#Lets calculate his Previous Ratings
 	net_rating=functions.net_rating(r)
@@ -47,9 +52,13 @@ def prof_details(request,pk):
 		comment_form=CommentForm(request.POST)
 		if(comment_form.is_valid):
 			content=request.POST.get('content')
-			c=Comment.objects.create(prof=Prof,user=request.user,content=content)
+			if (request.POST.get('anonymous')):
+				anonymous=True
+			else:
+				anonymous=False  
+			c=Comment.objects.create(prof=Prof,user=request.user,content=content,anonymous=anonymous)
 			c.save()
-			return redirect('review:details')
+			return redirect('review:details',pk)
 	else:
 		comment_form=CommentForm()
 	# this gives us the requires proff on the list
@@ -190,3 +199,32 @@ def prof_rating(request,pk):
 		context={'Prof':Prof,'net_rating':net_rating,'total_ratings':total_ratings}
 		return render(request,template_name,context)
 
+
+
+
+
+@login_required
+def like_post(request, pk):
+	#  pk is the comment id in comment's table
+
+	# Prof object extracted to redirect user to same page
+	Prof=Comment.objects.get(id=pk).prof
+	# comment object extracted from comment table
+	
+
+
+
+	# if (Comment.objects.filter(pk=pk ).exists()):
+
+ #        # the user already liked this comment before
+ #        # On click again his like will be removed
+	# 	Comment.objects.filter(pk=pk).update(vote=F('vote') - 1)
+		
+	# else :
+	# 	# create a object for the (user,comment)
+	Comment.objects.filter(pk=pk).update(like=F('like') + 1)
+
+	return redirect('review:details',Prof.id) 
+
+		
+		

@@ -12,4 +12,7 @@ urlpatterns=[
 	url((r'^logout/$'),auth_views.LogoutView.as_view(template_name='review/logout.html'),name='Logout'),
 	url(r'^profile/$',views.profile,name='profile' ),
 	url(r'^(?P<pk>[0-9]+)/rating$',views.prof_rating,name='prof_rating'),
+
+	# url for like/dislike of comments
+	url(r'^(?P<pk>[0-9]+)/like_post$',views.like_post,name='like_post'),
 	]

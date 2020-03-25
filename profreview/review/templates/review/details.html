@@ -51,15 +51,38 @@
 		<div style="width: 960px; margin: 0 auto; padding-top: 80px; padding-bottom: 80px;"> 
 
 		     <div class="testimonial-quote group">
+		     	{% if com.anonymous is False %}
+
 		        <img src="{{com.user.profile.image.url}}">
+		        {% else %}
+		        <img src="default.gif">
+		        {% endif %}
 		        <div class="quote-container">
 		            <blockquote>
 		                <p>{{com.content}}</p>
 		            </blockquote>  
-		            <cite><span>{{com.user|capfirst}}</span><br><br><br>
-		            </cite>
+		            <cite>
+		            	{% if com.anonymous is False %}
+		            	<span>{{com.user|capfirst}}</span><br><br>
+		            	<span>Upvotes:{{com.like}}</span>
+		            		{#Here comes the like button  #}
+
+		            	<br>
+		            	<br>
+		            	<a href="{%url 'review:like_post' com.id%}"><h3>Vote It</h3></a>
+		            	<br>
+		            	{% else %}
+		            	<span>Anonymous</span><br><br>
+		            	<span>Upvotes:{{com.like}}</span>
+		            	<br>
+		            	<br>
+		            	<a href="{% url 'review:like_post' com.id%}"><h3>Vote It</h3></a>
+		            	<br>
+		            	{% endif%}	            </cite>
 		        </div>
+		        
 		    </div>    
+		    
 		   <hr style="margin: 60px auto; opacity: .5;">
 
 

@@ -12,3 +12,8 @@ def net_rating(r):
 		return (s/l)
 	else :
 		return 0.0
+def likes(comment):
+	s=list()
+	for com in comment:
+		l=List.object.filter(comment=com)
+		s.append(l.count())
