@@ -34,7 +34,9 @@ class Comment(models.Model):
 	prof=models.ForeignKey(Proff ,on_delete=models.CASCADE)
 	user=models.ForeignKey(User,on_delete=models.CASCADE)
 	content=models.TextField(max_length=300)
-
+	anonymous=models.BooleanField(default=False)
+	like=models.IntegerField(default=0)
+	dislike=models.IntegerField(default=0)
 	timestamp=models.DateTimeField(auto_now_add=True)
 
 
@@ -54,3 +56,14 @@ class prof_review(models.Model):
 		# this is nice technique
 
 	rating1=models.IntegerField(validators=[MaxValueValidator(100), MinValueValidator(1)],null=True)
+
+
+
+# class Like(models.Model):
+#     user = models.ForeignKey(User,on_delete=models.CASCADE)
+#     comment = models.ForeignKey(Comment,on_delete=models.CASCADE)
+#     created = models.DateTimeField(auto_now_add=True)
+#     class Meta:
+#     	unique_together=('comment','user')
+
+  

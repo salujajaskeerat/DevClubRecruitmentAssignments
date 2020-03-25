@@ -34,9 +34,14 @@ class ProfileUpdateForm(forms.ModelForm):
 class CommentForm(forms.ModelForm):
 	class Meta:
 		model=Comment
-		fields=['content',]
+		fields=['content','anonymous',]
 
 class ProfRatingForm(forms.ModelForm):
 	class Meta:
 		model=prof_review
 		fields=['rating1',]
+
+# class LikePost(forms.ModelForm):
+# 	class Meta:
+# 		model=Comment
+# 		fields=['user','prof']
