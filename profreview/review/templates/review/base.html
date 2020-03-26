@@ -18,6 +18,20 @@
   <link href="https://fonts.googleapis.com/css?family=Satisfy&display=swap" rel="stylesheet">
   <!-- Loads path to static files -->
     <link rel="stylesheet" type="text/css" href="{% static 'review/style.css'%}">
+    <script type="text/javascript">
+
+    $(function(){
+      setTimeout(function(),{$('.alert').slideUp(2000);
+      },5000);
+
+    });
+
+
+
+    </script>
+
+
+
 
   {% block link %}
   {% endblock %}
@@ -68,6 +82,7 @@
   
 
 </body>
+        {% include "snippets/message.html" %}
 {% block body %}
 {% endblock%}
 

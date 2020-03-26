@@ -29,7 +29,7 @@ def prof_details(request,pk):
 	Prof=Proff.objects.get(pk=pk)
 	
 
-	comment=Comment.objects.filter(prof=pk).order_by('id')
+	comment=Comment.objects.filter(prof=pk).order_by('-like')
 	# to store Number of likes for each comment we
 	
 	 
@@ -104,30 +104,41 @@ class UserFormView(View ):
 
 
 		if form.is_valid():
-
-      			# we need to check if user entered correct form of data
-			user=form.save(commit=False)
-      			# this cretes a object of the form , but doesnot save it
-			username=form.cleaned_data['username']
-			password=form.cleaned_data['password']
-			user.set_password(password)
-			user.save()
-
-
-
-      			# now we need to return him to the login page we do
-
-			user=authenticate(username=username,password=password)
-      			
-
-
-			if user is not None:
-      				# this is just to vheck if user is not banned/disabled
+			email=request.POST.get('email')
+			if(functions.valid_email(email)):
 				
-				login(request,user)
-      				# after user has logged in we have to redirect him to home
-				return redirect('review:index')
+				if (functions.email_exists(email)):
+					
+					messages.error(request,'Email Already Exists')
+				else:	
+	      			# we need to check if user entered correct form of data
+					user=form.save(commit=False)
+		      			# this cretes a object of the form , but doesnot save it
+					username=form.cleaned_data['username']
+					password=form.cleaned_data['password']
+					user.set_password(password)
+					user.save()
 
+
+
+	      			# now we need to return him to the login page we do
+
+					user=authenticate(username=username,password=password)
+	      			
+
+
+					if user is not None:
+		      				# this is just to check if user is not banned/disabled
+						
+						login(request,user)
+		      				# after user has logged in we have to redirect him to home
+						messages.success(request,'Congratulations,Your Account Has Been Created Successfully')
+						return redirect('review:index')
+			else:
+				messages.warning(request,"Enter A Valid IIT-Delhi Email Id")
+
+		else:
+			messages.error(request,"Fill The Fields Correctly")
 
 		return render(request,(self.template_name),{'form':form})
 
@@ -209,20 +220,19 @@ def like_post(request, pk):
 
 	# Prof object extracted to redirect user to same page
 	Prof=Comment.objects.get(id=pk).prof
+	comment=Comment.objects.get(id=pk)
 	# comment object extracted from comment table
 	
 
 
 
-	# if (Comment.objects.filter(pk=pk ).exists()):
+	if (Liked.objects.filter(comment=comment,user=request.user).exists()):
+		messages.error(request,"You Have Already Like This Comment")
 
- #        # the user already liked this comment before
- #        # On click again his like will be removed
-	# 	Comment.objects.filter(pk=pk).update(vote=F('vote') - 1)
-		
-	# else :
-	# 	# create a object for the (user,comment)
-	Comment.objects.filter(pk=pk).update(like=F('like') + 1)
+	else:
+		Comment.objects.filter(pk=pk).update(like=F('like') + 1)
+		like=Liked.objects.create(comment=comment,user=request.user)
+		like.save()
 
 	return redirect('review:details',Prof.id) 
 
