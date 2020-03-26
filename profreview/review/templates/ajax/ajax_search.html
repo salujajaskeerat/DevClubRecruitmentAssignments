@@ -1,0 +1,13 @@
+{% if Profs.count > 0 %}
+
+	{% for Prof in Profs%}
+	<div  style="border: 1px solid black " align="center" id='searches' >
+		<a href="{% url 'review:details' Prof.id%}">{{Prof.Name}}---{{Prof.department}} Department--{{Prof.post}}</a>
+		
+</div>
+	
+	{%endfor%}
+{%else%}
+<li>Found Nothing</li>
+
+{% endif %}

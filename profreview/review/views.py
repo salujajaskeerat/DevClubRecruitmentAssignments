@@ -1,12 +1,11 @@
 from django.db.models import F
 from django.contrib.auth.decorators import login_required
 # we will use this decorator to check if user is login before accesing the page  
-from django.views import generic
+from django.views import generic ,View
 from .models import *
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate , login 
 from django.contrib.auth.views import LoginView
-from django.views import View
 from .forms import *
 from django.contrib import messages
 from . import functions
@@ -238,3 +237,17 @@ def like_post(request, pk):
 
 		
 		
+def search(request):
+	if request.method=='POST':
+		search_text=request.POST['search_text']
+		# This will get the field search_text from the form. This will
+		# of type distionary 
+	else:
+
+		search_text=''
+
+	Profs=Proff.objects.filter(Name__contains=search_text)
+	content={
+	'Profs':Profs,
+	}
+	return render(request,'ajax/ajax_search.html',content)
