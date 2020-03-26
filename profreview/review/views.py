@@ -104,30 +104,41 @@ class UserFormView(View ):
 
 
 		if form.is_valid():
-
-      			# we need to check if user entered correct form of data
-			user=form.save(commit=False)
-      			# this cretes a object of the form , but doesnot save it
-			username=form.cleaned_data['username']
-			password=form.cleaned_data['password']
-			user.set_password(password)
-			user.save()
-
-
-
-      			# now we need to return him to the login page we do
-
-			user=authenticate(username=username,password=password)
-      			
-
-
-			if user is not None:
-      				# this is just to vheck if user is not banned/disabled
+			email=request.POST.get('email')
+			if(functions.valid_email(email)):
 				
-				login(request,user)
-      				# after user has logged in we have to redirect him to home
-				return redirect('review:index')
+				if (functions.email_exists(email)):
+					
+					messages.error(request,'Email Already Exists')
+				else:	
+	      			# we need to check if user entered correct form of data
+					user=form.save(commit=False)
+		      			# this cretes a object of the form , but doesnot save it
+					username=form.cleaned_data['username']
+					password=form.cleaned_data['password']
+					user.set_password(password)
+					user.save()
 
+
+
+	      			# now we need to return him to the login page we do
+
+					user=authenticate(username=username,password=password)
+	      			
+
+
+					if user is not None:
+		      				# this is just to check if user is not banned/disabled
+						
+						login(request,user)
+		      				# after user has logged in we have to redirect him to home
+						messages.success(request,'Congratulations,Your Account Has Been Created Successfully')
+						return redirect('review:index')
+			else:
+				messages.warning(request,"Enter A Valid IIT-Delhi Email Id")
+
+		else:
+			messages.error(request,"Fill The Fields Correctly")
 
 		return render(request,(self.template_name),{'form':form})
 

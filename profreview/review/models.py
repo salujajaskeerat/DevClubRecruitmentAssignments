@@ -25,6 +25,7 @@ class Profile(models.Model):
 	user=models.OneToOneField(User,on_delete=models.CASCADE)
 	# we are basically using username as the primary key for our project
 	image=models.ImageField(default='default.gif')
+	
 
 	def __str__(self):
 		return f'{self.user.username} Profile'
