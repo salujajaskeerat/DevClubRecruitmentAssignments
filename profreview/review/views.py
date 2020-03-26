@@ -29,7 +29,7 @@ def prof_details(request,pk):
 	Prof=Proff.objects.get(pk=pk)
 	
 
-	comment=Comment.objects.filter(prof=pk).order_by('id')
+	comment=Comment.objects.filter(prof=pk).order_by('-like')
 	# to store Number of likes for each comment we
 	
 	 
@@ -220,20 +220,19 @@ def like_post(request, pk):
 
 	# Prof object extracted to redirect user to same page
 	Prof=Comment.objects.get(id=pk).prof
+	comment=Comment.objects.get(id=pk)
 	# comment object extracted from comment table
 	
 
 
 
-	# if (Comment.objects.filter(pk=pk ).exists()):
+	if (Liked.objects.filter(comment=comment,user=request.user).exists()):
+		messages.error(request,"You Have Already Like This Comment")
 
- #        # the user already liked this comment before
- #        # On click again his like will be removed
-	# 	Comment.objects.filter(pk=pk).update(vote=F('vote') - 1)
-		
-	# else :
-	# 	# create a object for the (user,comment)
-	Comment.objects.filter(pk=pk).update(like=F('like') + 1)
+	else:
+		Comment.objects.filter(pk=pk).update(like=F('like') + 1)
+		like=Liked.objects.create(comment=comment,user=request.user)
+		like.save()
 
 	return redirect('review:details',Prof.id) 
 

@@ -25,7 +25,7 @@ class Profile(models.Model):
 	user=models.OneToOneField(User,on_delete=models.CASCADE)
 	# we are basically using username as the primary key for our project
 	image=models.ImageField(default='default.gif')
-	
+
 
 	def __str__(self):
 		return f'{self.user.username} Profile'
@@ -60,11 +60,11 @@ class prof_review(models.Model):
 
 
 
-# class Like(models.Model):
-#     user = models.ForeignKey(User,on_delete=models.CASCADE)
-#     comment = models.ForeignKey(Comment,on_delete=models.CASCADE)
-#     created = models.DateTimeField(auto_now_add=True)
-#     class Meta:
-#     	unique_together=('comment','user')
+class Liked(models.Model):
+    user = models.ForeignKey(User,on_delete=models.CASCADE)
+    comment = models.ForeignKey(Comment,on_delete=models.CASCADE)
+    created = models.DateTimeField(auto_now_add=True)
+    class Meta:
+    	unique_together=('comment','user')
 
   
