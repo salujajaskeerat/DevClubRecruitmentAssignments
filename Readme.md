@@ -28,6 +28,25 @@ This is website which allows IITD students to review their Proffesor by giving t
 
 
 
+#My Previous Submision of Assignment to devclub.
+--------------------------------------------
+1.Hackathon Project:::
+https://github.com/salujajaskeerat/SERVERMONK.git
+In this project my team secured 3rd position , we had made foodtracker.com, .
+I had done the Front-end development and also the backend-development.This was made using Flask.
+
+2.Winter Assignments
+	Bash Assignments::
+	-----------------
+	https://github.com/salujajaskeerat/DevClubBashAssignment.git
+	Again Here my submisiion was in top 3 best submisions.
+
+	Html Assignments
+	-------------
+	https://github.com/salujajaskeerat/DevClubAssignment2.git
+	This was my first introduction to HTML, not great in UI and no backend stuff, 
+	but it was my first submission although.
+	
 
 Note::
 Name- jaskeerat singh Saluja
