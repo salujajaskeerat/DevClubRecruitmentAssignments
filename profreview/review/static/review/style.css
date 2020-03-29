@@ -243,5 +243,19 @@ hr{
     text-align: right; 
 }
 
+/* Here comes the searches Output*/
+#searches{
+	width:50%;
+	margin: auto;
 
+	background-color: white;
 
+}
+.Input-search{
+	width: 50%;
+}
+
+#card-image{
+	height: 200px;
+	
+}

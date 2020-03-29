@@ -11,10 +11,11 @@ class Proff(models.Model):
 	department=models.ForeignKey(department,on_delete=models.CASCADE,null=True)
 	Name=models.CharField(max_length=100)
 	email=models.CharField(max_length=40)
-	Dpt=models.CharField(max_length=40)
+	
 	research=models.CharField(max_length=100)
 	post=models.CharField(max_length=25)
 	image=models.ImageField()
+	course=models.CharField(max_length=40, null=True)
 
 	def __str__(self):
 		return self.Name

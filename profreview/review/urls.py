@@ -15,4 +15,5 @@ urlpatterns=[
 
 	# url for like/dislike of comments
 	url(r'^(?P<pk>[0-9]+)/like_post$',views.like_post,name='like_post'),
+	url(r'^search$',views.search,name='search')
 	]

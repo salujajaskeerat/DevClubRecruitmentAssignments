@@ -14,7 +14,20 @@
 	</div>
 </div>	
 
-	
+	<div class="text-center" >
+		<h1>Search By Professor Name </h1>
+		<br><br>
+		{% csrf_token %}
+		<input type="text" name="search" id="search" placeholder="Enter Professor Name" class="Input-search" />
+		
+		{# The Input we Type is taken By ajax and Handled  #}
+		<div id='search-results' class="Searches" >
+
+			{# Jquery Will FIll this List With results it Get from Search functions #}
+		</div>
+
+
+	</div>
 
 		<div class="container-fluid bg-3 text-center">    
 		  
