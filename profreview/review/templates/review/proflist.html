@@ -11,11 +11,21 @@
 	</div>
 
 	<div class="container-fluid text-center">
-		<h2>The list of Professors are ::</h2>
-		<ul>
-			{% for P in Prof %}
-			<li><a href="{% url 'review:details' P.id %}">{{ P.Name }}  </a></li>
-			{% endfor %}
-		</ul>
+		<h2>The list of Professors are in  ::</h2>
+
 	</div>
+	{#  here comes each professors in a card layout #}
+			<div class="row">
+
+				{% for P in Prof %}
+			<div class="card" style="width:20%">
+		  <img class="card-img-top" id="card-image" src="{{P.image.url}}" alt="Card image">
+		  <div class="card-body">
+		    <h4 class="card-title">{{ P.Name }}</h4>
+		    
+		    <a href="{% url 'review:details' P.id %}" class="btn btn-primary streched-link">See Profile</a>
+		  </div>
+		</div>
+					{% endfor %}
+</div>
 {% endblock %}
